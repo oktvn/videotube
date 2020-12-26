@@ -1,0 +1,36 @@
+version: '2'
+
+services:
+   db:
+     image: mysql:5.7
+     container_name: mysql_db
+     user: "1000:1001"
+     volumes:
+       - ./.db_data:/var/lib/mysql
+     restart: always
+     environment:
+       MYSQL_ROOT_PASSWORD: mysqlpassword1
+       MYSQL_DATABASE: default
+
+   web:
+     image: php:7.1.7-apache
+     container_name: apache-php
+     ports:
+       - '8080:80'
+     restart: always
+     volumes:
+       - .:/var/www/html  
+       
+   phpmyadmin:
+    depends_on:
+      - db
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    restart: always
+    ports:
+      - '8082:80'
+    environment:
+      PMA_USER: root
+      PMA_PASSWORD: mysqlpassword1
+      PMA_HOST: db
+
