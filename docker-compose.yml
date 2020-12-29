@@ -4,7 +4,6 @@ services:
    db:
      image: mysql:5.7
      container_name: mysql_db
-     user: "1000:1001"
      volumes:
        - ./.db_data:/var/lib/mysql
      restart: always
@@ -13,13 +12,15 @@ services:
        MYSQL_DATABASE: default
 
    web:
-     image: php:7.1.7-apache
+     image: mchauvel/php-pdo-mysql
      container_name: apache-php
      ports:
        - '8080:80'
      restart: always
      volumes:
        - .:/var/www/html  
+       - ./php.ini:/usr/local/etc/php/conf.d/docker-php-ext-pdo_mysql.ini
+
        
    phpmyadmin:
     depends_on:

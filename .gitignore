@@ -1,4 +1,7 @@
 .*
 README*
+*.mp4
+/uploads/videos/thumbnails/*.jpg
+phpinfo.php
 !README.md
 !/.gitignore
